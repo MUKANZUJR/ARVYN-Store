@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | ARVYN Store</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h2 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+        
+        form {
+            margin-top: 1rem;
+            text-align: left;
+        }
+        
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+        
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        button:hover {
+            background: #f5c518;
+            color: #111;
+        }
+        
+        .toggle-text {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .toggle-text a {
+            color: #f5c518;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm">
+            <h2>Login</h2>
+
+            <form onsubmit="event.preventDefault(); loginUser();">
+
+                <label>Login As</label>
+                <select id="loginType">
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+            </select>
+
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="toggle-text">
+                Don’t have an account? <a href="#" onclick="showRegister()">Register</a>
+            </p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="registerForm" style="display: none;">
+            <h2>Create Account</h2>
+
+            <form onsubmit="event.preventDefault(); registerUser();">
+
+                <label>Full Name</label>
+                <input type="text" id="regName" placeholder="Your full name" required>
+
+                <label>Phone Number</label>
+                <input type="text" id="regPhone" placeholder="Your phone number" required>
+
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="Enter your email" required>
+
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="Create password" required>
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p class="toggle-text">
+                Already have an account? <a href="#" onclick="showLogin()">Login</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        function showRegister() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registerForm").style.display = "block";
+        }
+
+        function showLogin() {
+            document.getElementById("registerForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+        }
+
+        // Save customers in localStorage
+        function registerUser() {
+            let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+            let newUser = {
+                name: document.getElementById("regName").value,
+                phone: document.getElementById("regPhone").value,
+                email: document.getElementById("regEmail").value,
+                password: document.getElementById("regPassword").value
+            };
+
+            users.push(newUser);
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Account created successfully!");
+            showLogin();
+        }
+
+        // Login system
+        function loginUser() {
+            let loginType = document.getElementById("loginType").value;
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+
+            // ADMIN LOGIN
+            if (loginType === "admin") {
+                if (email === "admin@arvyn.com" && password === "admin123") {
+                    localStorage.setItem("adminLoggedIn", "true");
+                    window.location.href = "admin-dashboard.html";
+                    return;
+                } else {
+                    alert("Invalid admin credentials!");
+                    return;
+                }
+            }
+
+            // CUSTOMER LOGIN
+            let users = JSON.parse(localStorage.getItem("users") || "[]");
+            let found = users.find(u => u.email === email && u.password === password);
+
+            if (found) {
+                localStorage.setItem("customerLoggedIn", "true");
+                localStorage.setItem("customerName", found.name);
+                window.location.href = "index.html"; // redirect to shop home
+            } else {
+                alert("Invalid email or password!");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

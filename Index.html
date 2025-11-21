@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARVYN Store | Shop Smart. Shop with Confidence.</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" />
+    <meta name="description" content="ARVYN Store — your go-to online shop for stylish, affordable, and quality products in Randburg, South Africa. Shop smart. Shop with confidence.">
+    <meta name="keywords" content="ARVYN Store, online shopping, fashion, perfumes, shoes, South Africa">
+    <meta name="author" content="ARVYN Store">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #111;
+            color: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: #f5c518;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+        
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-content a {
+            display: inline-block;
+            background: #f5c518;
+            color: #111;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .hero-content a:hover {
+            background: #e0b514;
+        }
+        
+        .info {
+            text-align: center;
+            padding: 4rem 10%;
+        }
+        
+        .info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #111;
+        }
+        
+        .info p {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            background: #f9f9f9;
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 220px;
+        }
+        
+        .feature h4 {
+            color: #f5c518;
+            font-size: 1.3rem;
+        }
+        
+        .products {
+            padding: 4rem 10%;
+            background-color: #fafafa;
+            text-align: center;
+        }
+        
+        .products h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product h4 {
+            margin: 0.8rem 0 0.4rem;
+        }
+        
+        .product p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .product a {
+            display: inline-block;
+            margin-bottom: 1rem;
+            background: #111;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        
+        .product a:hover {
+            background: #f5c518;
+            color: #111;
+        }
+        
+        footer {
+            background: #111;
+            color: #ddd;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin: 0.3rem 0;
+        }
+        
+        footer a {
+            color: #f5c518;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            header {
+                flex-direction: column;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>ARVYN Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="men.html">Men</a></li>
+                <li><a href="women.html">Women</a></li>
+                <li><a href="hair.html">Hair</a></li>
+                <li><a href="perfumes.html">Perfumes</a></li>
+                <li><a href="shoes.html">Shoes</a></li>
+                <li><a href="sport.html">Sport</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="Login.html">Login</a></li>
+                <li><a href="cart.html">View Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Shop Smart. Shop with Confidence.</h2>
+            <p>We’re your go-to online shop for stylish, affordable, and readily available items — delivered straight to your hands with ease.</p>
+            <a href="men.html">Start Shopping</a>
+        </div>
+    </section>
+
+    <section class="info">
+        <h3>Welcome to ARVYN Store!</h3>
+        <p>From clothing to accessories and everyday essentials, we bring you quality, convenience, and care in every order.</p>
+        <div class="features">
+            <div class="feature">
+                <h4>🛒 Fast Delivery</h4>
+                <p>Get your orders swiftly, right to your doorstep.</p>
+            </div>
+            <div class="feature">
+                <h4>📦 Secure Pick-Ups</h4>
+                <p>Safe and reliable packaging for every product.</p>
+            </div>
+            <div class="feature">
+                <h4>💬 Easy Ordering</h4>
+                <p>Shop smoothly with our user-friendly interface.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <h3>Featured Products</h3>
+        <div class="product-grid">
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80" alt="Men's Shirt" />
+                <h4>Men's Shirt</h4>
+                <p>Classic comfort. Stylish design.</p>
+                <a href="men.html">View</a>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?auto=format&fit=crop&w=600&q=80" alt="Women's Dress" />
+                <h4>Women's Dress</h4>
+                <p>Elegant, affordable, and timeless.</p>
+                <a href="women.html">View</a>
+            </div>
+
+            <div class="product">
+                <img src="images/perfume1.jpg" alt="Perfume" />
+                <h4>Perfume</h4>
+                <p>Smell fresh. Feel confident.</p>
+                <a href="perfumes.html">View</a>
+            </div>
+
+            <div class="product">
+                <img src="images/shoe3.jpg" alt="Sneakers" />
+                <h4>Shoes</h4>
+                <p>Comfort meets fashion in every step.</p>
+                <a href="shoes.html">View</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>ARVYN Store</strong> — Randburg, South Africa</p>
+        <p>Thank you for supporting a growing brand!</p>
+        <p>
+            <a href="policy.html">Policy & Privacy</a> |
+            <a href="contact.html">Contact Us</a>
+        </p>
+        <p>&copy; 2025 ARVYN Store. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        const links = document.querySelectorAll('nav a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                links.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

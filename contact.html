@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ARVYN Store</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-container {
+            padding: 4rem 10%;
+            background: #fafafa;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        .contact-container h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #111;
+        }
+        
+        .contact-form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .contact-form button {
+            background: #111;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .contact-form button:hover {
+            background: #f5c518;
+            color: #111;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>ARVYN Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="men.html">Men</a></li>
+                <li><a href="women.html">Women</a></li>
+                <li><a href="hair.html">Hair</a></li>
+                <li><a href="perfumes.html">Perfumes</a></li>
+                <li><a href="shoes.html">Shoes</a></li>
+                <li><a href="sport.html">Sport</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="cart.html">🛒 Cart</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-container">
+        <h3>Contact Us</h3>
+        <div class="contact-form">
+            <input type="text" id="contact-name" placeholder="Your Name" required>
+            <input type="email" id="contact-email" placeholder="Your Email" required>
+            <textarea id="contact-message" placeholder="Your Message" rows="5" required></textarea>
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </section>
+
+    <<footer>
+        <p><strong>ARVYN Store</strong> — Randburg, South Africa</p>
+        <p>Thank you for supporting a growing brand!</p>
+        <p>
+            <a href="policy.html">Policy & Privacy</a> |
+            <a href="contact.html">Contact Us</a>
+        </p>
+        <p>&copy; 2025 ARVYN Store. All rights reserved.</p>
+        </footer>
+
+
+        <script>
+            function sendMessage() {
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+
+                if (!name || !email || !message) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+
+                fetch('http://localhost:5000/api/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            message
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert('Message sent successfully!');
+                        document.getElementById('contact-name').value = '';
+                        document.getElementById('contact-email').value = '';
+                        document.getElementById('contact-message').value = '';
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Failed to send message. Try again.');
+                    });
+            }
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart | ARVYN Store</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>🛍️ ARVYN Store</h1>
+    </header>
+
+    <section class="cart">
+        <h3>Your Shopping Cart</h3>
+        <div id="cart-items"></div>
+
+        <div id="cart-total">
+            <h4>Total: R<span id="total-amount">0.00</span></h4>
+        </div>
+
+        <!-- CHECKOUT FORM -->
+        <form id="checkout-form" onsubmit="return placeOrder(event)">
+            <h4>Checkout Details</h4>
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="address">Delivery Address:</label>
+            <textarea id="address" placeholder="Enter delivery or pick-up details" required></textarea>
+
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" placeholder="+27 ..." required>
+
+            <p style="font-size: 0.9rem; margin-top: 1rem;">
+                <input type="checkbox" id="policy-agree" required> By placing an order, you agree to our
+                <a href="policy.html" target="_blank">Delivery & Collection Policy</a>.
+            </p>
+
+            <button type="submit" class="checkout-btn">Proceed to Pay</button>
+        </form>
+    </section>
+
+    <footer>
+        <p><strong>ARVYN Store</strong> — Randburg, South Africa</p>
+        <p>Thank you for supporting a growing brand!</p>
+        <p>
+            <a href="policy.html">Policy & Privacy</a> |
+            <a href="contact.html">Contact Us</a>
+        </p>
+        <p>&copy; 2025 ARVYN Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load cart from localStorage
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            const totalAmount = document.getElementById("total-amount");
+
+            cartItemsContainer.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty 🛒</p>";
+                totalAmount.textContent = "0.00";
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+                    <div class="cart-item-row">
+                        <img src="${item.image}" class="cart-img" alt="">
+                        <p>
+                            <strong>${item.name}</strong><br>
+                            Price: R${item.price.toFixed(2)}
+                        </p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="remove-btn">Remove</button>
+                `;
+                cartItemsContainer.appendChild(div);
+            });
+
+            totalAmount.textContent = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        // 🔵 PAYFAST OR BACKEND CHECKOUT
+        async function placeOrder(event) {
+            event.preventDefault();
+
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (cart.length === 0) {
+                alert("Your cart is empty. Add items before checking out.");
+                return false;
+            }
+
+            const customer = {
+                name: document.getElementById("name").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                contact: document.getElementById("contact").value.trim(),
+            };
+
+            if (!document.getElementById("policy-agree").checked) {
+                alert("Please agree to the Delivery & Collection Policy.");
+                return false;
+            }
+
+            try {
+                const response = await fetch("https://YOUR_BACKEND_URL/api/create-order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        customer,
+                        items: cart
+                    })
+                });
+
+                const html = await response.text();
+
+                // Redirect to PayFast
+                document.open();
+                document.write(html);
+                document.close();
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error placing order. Please try again.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadCart);
+    </script>
+
+</body>
+
+</html>

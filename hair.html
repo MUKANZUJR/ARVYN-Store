@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair | ARVYN Store</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" />
+    <style>
+        body {
+            font-family: Poppins, sans-serif;
+            margin: 0;
+            background: #fafafa;
+            color: #333;
+        }
+        
+        header {
+            background: #111;
+            color: #fff;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: #f5c518;
+        }
+        
+        .container {
+            padding: 3rem 10%;
+            text-align: center;
+        }
+        
+        #searchBar {
+            padding: 0.5rem;
+            width: 60%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .product img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .product h4 {
+            margin: 0.8rem 0 0.4rem;
+        }
+        
+        .product p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product button {
+            display: inline-block;
+            margin-bottom: 1rem;
+            background: #111;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .product button:hover {
+            background: #f5c518;
+            color: #111;
+        }
+        
+        footer {
+            background: #111;
+            color: #ddd;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        footer a {
+            color: #f5c518;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            #searchBar {
+                width: 90%;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>ARVYN Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="men.html">Men</a></li>
+                <li><a href="women.html">Women</a></li>
+                <li><a href="hair.html" class="active">Hair</a></li>
+                <li><a href="perfumes.html">Perfumes</a></li>
+                <li><a href="shoes.html">Shoes</a></li>
+                <li><a href="sport.html">Sport</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Hair Care & Wigs</h2>
+        <p>Find your perfect look — from natural to glam 💇‍♀️</p>
+        <input type="text" id="searchBar" placeholder="Search for products..." />
+
+        <div class="product-grid">
+            <div class="product">
+                <img src="images/hair1.jpg" alt="Luxury Wig" />
+                <h4>Luxury Wig</h4>
+                <p>Soft texture, natural feel.</p>
+                <p>Price: R800</p>
+                <button onclick="addToCart('Luxury Wig', 800)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/hair2.jpg" alt="Hair Oil" />
+                <h4>Hair Oil</h4>
+                <p>Strengthens and restores shine.</p>
+                <p>Price: R250</p>
+                <button onclick="addToCart('Hair Oil', 250)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="images/hair3.jpg" alt="Hair Serum" />
+                <h4>Hair Serum</h4>
+                <p>For sleek and smooth hair.</p>
+                <p>Price: R300</p>
+                <button onclick="addToCart('Hair Serum', 300)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>ARVYN Store</strong> — Randburg, South Africa</p>
+        <p>Thank you for supporting a growing brand!</p>
+        <p>
+            <a href="policy.html">Policy & Privacy</a> |
+            <a href="contact.html">Contact Us</a>
+        </p>
+        <p>&copy; 2025 ARVYN Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Add to Cart
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({
+                name,
+                price
+            });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(name + ' added to cart!');
+        }
+
+        // Search Products
+        document.getElementById('searchBar').addEventListener('input', function() {
+            let filter = this.value.toLowerCase();
+            let products = document.querySelectorAll('.product-grid .product');
+            products.forEach(product => {
+                let title = product.querySelector('h4').textContent.toLowerCase();
+                product.style.display = title.includes(filter) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
